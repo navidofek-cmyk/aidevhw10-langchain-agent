@@ -49,6 +49,11 @@ uv pip install -e .
 4. **Nastavení API klíče:**
    - Vytvořte soubor `my_api_key.py`
    - Napište do něj: `API_KEY = "váš-api-klíč-zde"`
+   
+   ⚠️ **DŮLEŽITÉ - BEZPEČNOST:**
+   - NIKDY necommitujte `my_api_key.py` do gitu!
+   - Soubor je již v `.gitignore` a automaticky se ignoruje
+   - Pokud omylem nahrajete API klíč na GitHub, okamžitě ho zneplatněte na OpenAI a vytvořte nový
 
 ## Spuštění
 
@@ -100,6 +105,16 @@ homework_agent/
 - Agent sám vybere správný nástroj podle toho, na co se ptáte
 - SQL tool má jenom read-only přístup (bezpečnost)
 - Databáze se vytvoří automaticky při prvním spuštění
+
+## ⚠️ Bezpečnostní upozornění
+
+**Tento repozitář je veřejný!**
+- `my_api_key.py` je v `.gitignore` a nesmí se nahrát na GitHub
+- Nikdy necommitujte API klíče do veřejných repozitářů
+- Pokud zjistíte, že váš API klíč je veřejný, okamžitě:
+  1. Zneplatněte ho na https://platform.openai.com/api-keys
+  2. Vygenerujte nový API klíč
+  3. Aktualizujte svůj lokální `my_api_key.py`
 
 ## Autor
 
