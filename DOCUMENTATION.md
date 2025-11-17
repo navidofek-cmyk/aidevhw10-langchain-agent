@@ -1,33 +1,32 @@
-# Dokumentace projektu / Project Documentation
+# Dokumentace projektu
 
-## 📚 Přehled / Overview
+## Přehled
 
-Tento projekt implementuje inteligentního agenta pomocí frameworku **Langchain**, který kombinuje schopnosti velkého jazykového modelu (LLM) s externími nástroji pro dotazování databází a vyhledávání informací.
+V tomhle projektu jsem vytvořil AI agenta pomocí Langchainu. Agent umí používat různé nástroje - může hledat informace na Wikipedii a dotazovat se do SQL databáze.
 
-## 🎯 Splnění zadání / Assignment Requirements
+## Splnění zadání
 
-### ✅ Framework: Langchain
-- Použit framework Langchain pro vytvoření agenta
-- Agent využívá `create_agent` funkci pro integraci LLM s nástroji
-- Model: OpenAI GPT-4o-mini
+### Framework: Langchain
+- Použil jsem Langchain framework
+- Agent je vytvořený pomocí funkce `create_agent`
+- Jako LLM model používám OpenAI GPT-4o-mini
 
-### ✅ Nástroje / Tools:
+### Nástroje:
 
 #### 1. Wikipedia Tool
-- **Typ:** Vestavěný Langchain Community tool
-- **Účel:** Vyhledávání obecných znalostí a informací
-- **Implementace:** `WikipediaQueryRun` s `WikipediaAPIWrapper`
-- **Příklady použití:**
+- **Typ:** Vestavěný tool z Langchain Community
+- **K čemu slouží:** Vyhledávání obecných informací
+- **Jak je to implementované:** `WikipediaQueryRun` s `WikipediaAPIWrapper`
+- **Příklady:**
   - "Who is Albert Einstein?"
   - "What is Python programming language?"
-  - "Tell me about Prague"
 
 #### 2. SQL Database Tool
 - **Typ:** Vlastní custom tool
-- **Účel:** Dotazování relační databáze SQLite
-- **Implementace:** Dekorátor `@tool` s funkcí `query_sql_database`
-- **Bezpečnost:** Povoleny pouze SELECT dotazy (read-only)
-- **Databázové schéma:**
+- **K čemu slouží:** Dotazování SQLite databáze
+- **Jak je to implementované:** Použil jsem dekorátor `@tool` s funkcí `query_sql_database`
+- **Bezpečnost:** Povolil jsem jenom SELECT dotazy (read-only)
+- **Struktura databáze:**
   ```sql
   TABLE employees (
     id INTEGER PRIMARY KEY,
@@ -50,35 +49,21 @@ Tento projekt implementuje inteligentního agenta pomocí frameworku **Langchain
   - "What products cost less than $100?"
   - "Who has the highest salary?"
 
-## 🏗️ Architektura / Architecture
+## Jak to funguje (architektura)
 
 ```
-┌─────────────┐
-│    User     │
-└──────┬──────┘
-       │ Query
-       ▼
-┌─────────────────────────────┐
-│   Langchain Agent           │
-│   (GPT-4o-mini)            │
-└──────┬──────────────┬───────┘
-       │              │
-       ▼              ▼
-┌──────────────┐  ┌──────────────┐
-│ Wikipedia    │  │ SQL Database │
-│ Tool         │  │ Tool         │
-└──────────────┘  └──────────────┘
-       │              │
-       ▼              ▼
-┌──────────────┐  ┌──────────────┐
-│ Wikipedia    │  │ SQLite       │
-│ API          │  │ Database     │
-└──────────────┘  └──────────────┘
+Uživatel
+   ↓
+Langchain Agent (GPT-4o-mini)
+   ↓          ↓
+Wikipedia   SQL Database
+   ↓          ↓
+Wiki API   SQLite DB
 ```
 
-## 💻 Technické řešení / Technical Implementation
+## Technické řešení
 
-### 1. Agent Initialization
+### Vytvoření agenta:
 ```python
 agent = create_agent(
     llm=ChatOpenAI(model="gpt-4o-mini"),
@@ -87,20 +72,20 @@ agent = create_agent(
 )
 ```
 
-### 2. Tool Selection
-Agent automaticky vybírá správný nástroj na základě:
-- Analýzy dotazu uživatele
-- Popisů nástrojů (descriptions)
+### Jak agent vybírá nástroj:
+Agent se rozhoduje podle:
+- Co se uživatel ptá
+- Popisů nástrojů
 - Kontextu konverzace
 
-### 3. Execution Flow
-1. Uživatel zadá dotaz
-2. Agent analyzuje dotaz pomocí LLM
-3. Agent rozhodne, který nástroj použít
-4. Nástroj provede akci (Wikipedia API nebo SQL query)
-5. Agent zpracuje výsledek a odpoví uživateli
+### Jak to běží:
+1. Uživatel se zeptá
+2. Agent pomocí LLM analyzuje otázku
+3. Agent vybere správný nástroj
+4. Nástroj udělá co má (Wikipedia nebo SQL)
+5. Agent odpověď naformátuje a pošle uživateli
 
-## 🔧 Instalace a spuštění / Installation & Running
+## Instalace
 
 ### Rychlá instalace:
 ```powershell
@@ -108,35 +93,33 @@ cd homework_agent
 .\setup.ps1
 ```
 
-### Manuální instalace:
+### Nebo manuálně:
 ```powershell
-# 1. Vytvoření virtual environment
+# 1. Virtual environment
 python -m venv venv
 
 # 2. Aktivace
 .\venv\Scripts\Activate.ps1
 
-# 3. Instalace závislostí
+# 3. Balíčky
 pip install -r requirements.txt
 
-# 4. Konfigurace
-Copy-Item .env.example .env
-# Editovat .env a doplnit OPENAI_API_KEY
+# 4. API klíč
+# Vytvořit my_api_key.py s API_KEY = "..."
 
-# 5. Spuštění
+# 5. Spustit
 python main.py
 ```
 
-## 📊 Příklady interakcí / Interaction Examples
+## Příklady
 
-### Příklad 1: Wikipedia dotaz
+### Wikipedia dotaz:
 ```
 You: Who is Albert Einstein?
-Agent: Albert Einstein was a German-born theoretical physicist 
-       who developed the theory of relativity...
+Agent: Albert Einstein was a German-born theoretical physicist...
 ```
 
-### Příklad 2: SQL dotaz
+### SQL dotaz:
 ```
 You: Show me all employees in the Engineering department
 Agent: Here are the employees in Engineering:
@@ -144,77 +127,54 @@ Agent: Here are the employees in Engineering:
        - Bob Johnson (Salary: $95,000)
 ```
 
-### Příklad 3: Kombinovaný dotaz
-```
-You: Tell me about databases and show me our products
-Agent: [Použije Wikipedia pro info o databázích]
-       [Použije SQL pro seznam produktů]
-```
+## Bezpečnost
 
-## 🛡️ Bezpečnostní opatření / Security Measures
+1. **SQL Injection ochrana**
+   - Povoleny jenom SELECT dotazy
+   - Validace SQL před spuštěním
 
-1. **SQL Injection Protection**
-   - Povoleny pouze SELECT dotazy
-   - Validace SQL příkazů před spuštěním
+2. **API klíče**
+   - Uloženy v my_api_key.py (gitignored)
+   - Nikdy nenahráno na git
 
-2. **API Keys**
-   - Ukládány v .env souboru (gitignored)
-   - Nikdy necommitovány do repozitáře
+3. **Databáze**
+   - Read-only přístup
+   - Lokální SQLite, bez externího přístupu
 
-3. **Database Access**
-   - Read-only přístup přes SQL tool
-   - Lokální SQLite databáze bez externího přístupu
+## Co by se dalo ještě přidat
 
-## 📈 Možná rozšíření / Possible Extensions
+1. **Víc nástrojů:**
+   - Web scraping
+   - API na počasí, akcie atd.
+   - Práce se soubory
 
-1. **Více nástrojů:**
-   - Web scraping (Beautiful Soup)
-   - API integrace (weather, stocks, news)
-   - File operations
-   - Email sending
-
-2. **Pokročilé SQL funkce:**
+2. **Lepší SQL:**
    - Agregační dotazy
-   - JOIN operace
-   - Vizualizace dat
+   - JOINy
+   - Grafy z dat
 
-3. **Konverzační paměť:**
+3. **Paměť konverzace:**
    - Chat history
-   - Context awareness
-   - Multi-turn conversations
+   - Vícestupňové dotazy
 
-4. **MCP integrace:**
-   - Model Context Protocol
-   - Standardizované tool rozhraní
+## Testování
 
-## 🧪 Testování / Testing
-
-Spuštění testů:
 ```powershell
 python test_agent.py
 ```
 
-Testy ověřují:
-- ✅ Inicializaci databáze
-- ✅ Funkčnost Wikipedia tool
-- ✅ Funkčnost SQL tool
-- ✅ Odpovědi agenta
+Testy kontrolují:
+- Inicializaci databáze
+- Jestli funguje Wikipedia tool
+- Jestli funguje SQL tool
+- Odpovědi agenta
 
-## 📝 Závěr / Conclusion
+## Závěr
 
-Projekt úspěšně demonstruje:
-- ✅ Použití Langchain frameworku
-- ✅ Integraci LLM s externími nástroji
-- ✅ Kombinaci vestavěných a custom nástrojů
-- ✅ Praktickou aplikaci AI agentů
-- ✅ Bezpečné dotazování databází
-- ✅ Modulární a rozšiřitelnou architekturu
+Projekt splňuje zadání:
+- Langchain framework
+- LLM s externími nástroji
+- Vestavěné i custom nástroje
+- Bezpečné dotazování databází
 
-Agent je plně funkční, testovaný a připravený k použití nebo dalšímu rozšíření.
-
----
-
-**Autor:** AI Developer Student  
-**Framework:** Langchain  
-**LLM:** OpenAI GPT-4o-mini  
-**Datum:** Listopad 2025
+Agent funguje, je otestovaný a připravený k použití.

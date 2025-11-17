@@ -1,130 +1,106 @@
-# Langchain Agent with Wikipedia & SQL Database
+# Langchain Agent - Domácí úkol
 
-## 📋 Zadání / Assignment
+## Zadání
 
-Navrhněte a vytvořte agenta pomocí frameworku Langchain, který pracuje s nástroji (Tools) a odpovídá na dotazy přes LLM.
+Cílem bylo vytvořit agenta pomocí frameworku Langchain, který umí pracovat s různými nástroji a odpovídat na dotazy.
 
-**Framework:** Langchain  
-**Nástroje:** Wikipedia, SQL Database
+**Použitý framework:** Langchain  
+**Nástroje:** Wikipedia a SQL databáze
 
-## 🎯 Funkcionalita / Features
+## Co agent umí
 
-Agent disponuje následujícími schopnostmi:
+Agent má dva hlavní nástroje:
 
-1. **Wikipedia Tool** - Vyhledávání informací na Wikipedii
-2. **SQL Database Tool** - Dotazování SQLite databáze
+1. **Wikipedia** - může hledat informace na Wikipedii
+2. **SQL databáze** - umí se dotazovat do SQLite databáze
 
-### Databáze obsahuje:
-- **Tabulka `employees`**: informace o zaměstnancích (jméno, oddělení, plat, datum nástupu)
-- **Tabulka `products`**: informace o produktech (název, kategorie, cena, skladem)
+### Databáze:
+- **Tabulka `employees`**: zaměstnanci (jméno, oddělení, plat, datum nástupu)
+- **Tabulka `products`**: produkty (název, kategorie, cena, počet kusů)
 
-## 🛠️ Instalace / Installation
+## Instalace
 
-### Požadavky / Requirements
-- Python 3.10 nebo vyšší
+### Co je potřeba
+- Python 3.10 nebo novější
 - OpenAI API klíč
 
-### Postup instalace:
+### Jak to nainstalovat:
 
-1. **Vytvořte virtuální prostředí:**
+1. **Vytvoření virtuálního prostředí:**
 ```powershell
 python -m venv venv
 ```
 
-2. **Aktivujte virtuální prostředí:**
+2. **Aktivace virtuálního prostředí:**
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-3. **Nainstalujte závislosti:**
+3. **Instalace balíčků:**
 ```powershell
 pip install langchain langchain-openai langchain-community python-dotenv wikipedia
 ```
 
-Nebo pomocí uv:
+Nebo:
 ```powershell
 uv pip install -e .
 ```
 
-4. **Nastavte API klíč:**
-   - Zkopírujte `.env.example` jako `.env`
-   - Vyplňte svůj OpenAI API klíč
+4. **Nastavení API klíče:**
+   - Vytvořte soubor `my_api_key.py`
+   - Napište do něj: `API_KEY = "váš-api-klíč-zde"`
 
-```powershell
-Copy-Item .env.example .env
-# Poté editujte .env soubor a doplňte API klíč
-```
-
-## 🚀 Spuštění / Running
+## Spuštění
 
 ```powershell
 python main.py
 ```
 
-## 💡 Příklady použití / Usage Examples
+## Příklady použití
 
 ### Dotazy na Wikipedia:
 ```
 You: Who is Albert Einstein?
 You: What is Python programming language?
-You: Tell me about Prague
 ```
 
 ### SQL dotazy:
 ```
 You: Show me all employees in the Engineering department
 You: What products cost less than $100?
-You: Who has the highest salary?
-You: List all electronic products
 ```
 
-### Kombinované dotazy:
-```
-You: Find information about databases on Wikipedia
-You: Show me employees in sales and tell me about sales techniques
-```
-
-## 📊 Struktura projektu / Project Structure
+## Struktura projektu
 
 ```
 homework_agent/
 │
-├── main.py              # Hlavní soubor s agentem
-├── pyproject.toml       # Definice závislostí
-├── .env                 # API klíče (necommitovat!)
-├── .env.example         # Příklad konfigurace
-├── README.md            # Tento soubor
-└── sample_database.db   # SQLite databáze (vytvoří se automaticky)
+├── main.py              # Hlavní program s agentem
+├── demo.py              # Demo ukázka
+├── test_agent.py        # Testy
+├── my_api_key.py        # API klíč (necommitovat!)
+├── pyproject.toml       # Závislosti
+└── README.md            # Tento soubor
 ```
 
-## 🔧 Technické detaily / Technical Details
+## Technické detaily
 
-### Použité nástroje:
-- **LangChain**: Framework pro tvorbu AI agentů
-- **OpenAI GPT-4**: Jazykový model
-- **Wikipedia API**: Přístup k Wikipedii
-- **SQLite**: Relační databáze
+### Použité technologie:
+- **LangChain** - framework pro AI agenty
+- **OpenAI GPT-4o-mini** - jazykový model
+- **Wikipedia API** - přístup k Wikipedii
+- **SQLite** - databáze
 
-### Implementované tools:
-1. `WikipediaQueryRun` - vestavěný Langchain tool pro Wikipedia
-2. `query_sql_database` - vlastní tool pro SQL dotazy
+### Jak to funguje:
+1. `WikipediaQueryRun` - vestavěný tool z Langchainu pro Wikipedia
+2. `query_sql_database` - vlastní tool pro SQL dotazy (jenom SELECT)
 
-## 🔒 Bezpečnost / Security
+## Poznámky
 
-- SQL tool povoluje pouze SELECT dotazy (read-only)
-- API klíče jsou ukládány v `.env` souboru (gitignored)
-- Databáze je lokální SQLite bez externího přístupu
-
-## 📝 Poznámky / Notes
-
-- Agent automaticky vybere správný nástroj na základě dotazu
-- Lze kombinovat více nástrojů v jednom dotazu
+- Agent sám vybere správný nástroj podle toho, na co se ptáte
+- SQL tool má jenom read-only přístup (bezpečnost)
 - Databáze se vytvoří automaticky při prvním spuštění
 
-## 👨‍💻 Autor / Author
+## Autor
 
-Vypracováno jako domácí úkol pro předmět AI Developer
-
-## 📄 Licence / License
-
-Tento projekt je vytvořen pro vzdělávací účely.
+Domácí úkol pro předmět AI Developer

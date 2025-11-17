@@ -1,52 +1,44 @@
-# 🚀 QUICK START GUIDE
+# Rychlý start
 
-## ⚡ Nejrychlejší způsob spuštění / Fastest Way to Run
+## Jak to co nejrychleji spustit
 
-### 1️⃣ Přejděte do složky projektu
+### 1. Přejít do složky projektu
 ```powershell
 cd c:\ubuntu\pythonPlay\aidevhw10\homework_agent
 ```
 
-### 2️⃣ Spusťte setup script
+### 2. Spustit setup
 ```powershell
 .\setup.ps1
 ```
 
-### 3️⃣ Zkopírujte a upravte .env soubor
+### 3. Vytvořit soubor s API klíčem
 ```powershell
-Copy-Item .env.example .env
-notepad .env
-```
-**Vložte svůj OpenAI API klíč:**
-```
-OPENAI_API_KEY=sk-your-actual-api-key-here
+# Vytvořte soubor my_api_key.py a napište do něj:
+API_KEY = "váš-openai-klíč"
 ```
 
-### 4️⃣ Spusťte agenta
+### 4. Spustit agenta
 ```powershell
 python main.py
 ```
 
 ---
 
-## 📋 Co agent umí / What the Agent Can Do
+## Co můžete zkoušet
 
-### ✅ Wikipedia Queries
+### Wikipedia dotazy:
 ```
 You: Who is Albert Einstein?
 You: What is Python programming language?
-You: Tell me about artificial intelligence
 ```
 
-### ✅ SQL Database Queries
+### SQL dotazy do databáze:
 ```
 You: Show me all employees in the Engineering department
 You: What products cost less than $100?
 You: Who has the highest salary?
-You: List all electronic products
 ```
-
----
 
 ## 🎯 Struktura projektu / Project Structure
 
@@ -55,82 +47,75 @@ homework_agent/
 ├── main.py                 # ⭐ Hlavní soubor - spustitelný agent
 ├── test_agent.py          # 🧪 Testy
 ├── README.md              # 📖 Kompletní dokumentace
-├── DOCUMENTATION.md       # 📚 Technická dokumentace
-├── QUICKSTART.md          # ⚡ Tento soubor
-├── requirements.txt       # 📦 Python závislosti
-├── pyproject.toml         # 🔧 Konfigurace projektu
-├── setup.ps1              # 🚀 Instalační script
-├── .env.example           # 🔑 Příklad konfigurace
-└── .gitignore             # 🚫 Git ignore rules
+---
+
+## Struktura projektu
+
+```
+homework_agent/
+├── main.py                # Hlavní program
+├── demo.py                # Demo ukázka
+├── test_agent.py          # Testy
+├── README.md              # Základní info
+├── DOCUMENTATION.md       # Technická dokumentace
+├── QUICKSTART.md          # Tento soubor
+├── requirements.txt       # Python balíčky
+├── my_api_key.py          # API klíč (necommitovat!)
+└── .gitignore             # Git ignore
 ```
 
 ---
 
-## 🆘 Řešení problémů / Troubleshooting
+## Řešení problémů
 
-### ❌ Problem: Import errors
+### Import errors:
 ```powershell
 pip install -r requirements.txt
 ```
 
-### ❌ Problem: OpenAI API error
+### OpenAI API error:
 Zkontrolujte:
-1. Máte platný API klíč v `.env`
-2. API klíč je správně naformátovaný (začína "sk-")
-3. Máte dostatek kreditů na OpenAI účtu
+1. Je správně API klíč v my_api_key.py
+2. Klíč začíná na "sk-"
+3. Máte kredity na OpenAI účtu
 
-### ❌ Problem: Database not found
-Agent vytvoří databázi automaticky při prvním spuštění. Pokud chybí:
-```powershell
-python main.py  # Spustí se a vytvoří databázi
-```
+### Database not found:
+Databáze se vytvoří automaticky při prvním spuštění.
 
 ---
 
-## 📤 Odevzdání na GitHub / GitHub Submission
+## Nahrání na GitHub
 
-### 1. Vytvořte nový repository na GitHubu
+### 1. Vytvořit repository na GitHubu
 
-### 2. Inicializujte git a nahrajte kód:
+### 2. Nahrát kód:
 ```powershell
 cd homework_agent
 git init
 git add .
-git commit -m "Initial commit: Langchain agent with Wikipedia and SQL"
+git commit -m "Langchain agent - domaci ukol"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git remote add origin https://github.com/VASE_JMENO/VASE_REPO.git
 git push -u origin main
 ```
 
-### 3. Odevzdejte odkaz v Google Classroom
+### 3. Odevzdat odkaz v Google Classroom
 
 ---
 
-## 💡 Tipy / Tips
+## Tipy
 
-1. **Testování**: Nejdřív spusťte `python test_agent.py` pro ověření funkčnosti
-2. **Experimentování**: Zkuste různé dotazy, agent se učí z kontextu
-3. **Rozšíření**: Můžete přidat další tools (weather API, web scraping, atd.)
-4. **Dokumentace**: Vše je zdokumentováno v README.md a DOCUMENTATION.md
-
----
-
-## 📞 Kontakt / Support
-
-Pokud máte otázky ke kódu:
-1. Zkontrolujte README.md
-2. Přečtěte si DOCUMENTATION.md
-3. Spusťte test_agent.py pro diagnostiku
+1. **Testování**: Nejdřív spustit `python test_agent.py`
+2. **Experimentování**: Zkusit různé dotazy
+3. **Rozšíření**: Dají se přidat další tools
 
 ---
 
-**✅ Projekt je ready to submit!**
+**Projekt je hotový a připravený k odevzdání!**
 
-Obsahuje:
-- ✅ Funkční Langchain agent
-- ✅ Wikipedia tool
-- ✅ SQL database tool
-- ✅ Kompletní dokumentaci
-- ✅ Testy
-- ✅ Setup scripty
-- ✅ .gitignore a best practices
+Co obsahuje:
+- Funkční Langchain agent
+- Wikipedia tool
+- SQL database tool
+- Dokumentace
+- Testy
